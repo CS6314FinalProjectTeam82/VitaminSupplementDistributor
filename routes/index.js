@@ -16,7 +16,6 @@ router.post('/login', function(req, res, next) {
     if(err) throw err;
     res.json(user);
    });
-  // res.render('editmovie', { myID : req.params.id });
 });
 
 
