@@ -1,0 +1,221 @@
+<!-- 
+THEME: Aviato | E-commerce template
+VERSION: 1.0.0
+AUTHOR: Themefisher
+
+HOMEPAGE: https://themefisher.com/products/aviato-e-commerce-template/
+DEMO: https://demo.themefisher.com/aviato/
+GITHUB: https://github.com/themefisher/Aviato-E-Commerce-Template/
+
+WEBSITE: https://themefisher.com
+TWITTER: https://twitter.com/themefisher
+FACEBOOK: https://www.facebook.com/themefisher
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  ================================================== -->
+  <meta charset="utf-8">
+  <title>Vitamin Supplement Distributor</title>
+
+  <!-- Mobile Specific Metas
+  ================================================== -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Construction Html5 Template">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="author" content="Themefisher">
+  <meta name="generator" content="Themefisher Constra HTML Template v1.0">
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="images/favicon.png" />
+  
+  <!-- Themefisher Icon font -->
+  <link rel="stylesheet" href="plugins/themefisher-font/style.css">
+  <!-- bootstrap.min css -->
+  <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+  
+  <!-- Animate css -->
+  <link rel="stylesheet" href="plugins/animate/animate.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="plugins/slick/slick.css">
+  <link rel="stylesheet" href="plugins/slick/slick-theme.css">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="stylesheets/style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css">
+
+  <script>
+      var countBox =1;
+var boxName = 0;
+function addInput()
+{
+  
+     var boxName="textBox"+countBox; 
+document.getElementById('response').innerHTML+=
+'<div class="form-group"><input type="text" class="form-control" id="'+boxName+'" name="itemname"+ "'+countBox+'" placeholder="Itemname"></div><div class="form-group"><input type="text" class="form-control"  id="'+boxName+'" name="amountperserving"+ "'+countBox+'" placeholder="Amountperserving"></div><div class="form-group"><input type="text" class="form-control" id="'+boxName+'" name="persondailyvalue"+ "'+countBox+'" placeholder="Persondailyvalue"></div>'
+  countBox += 1;
+}
+  </script>
+<!-- '<br/><input type="text" id="'+boxName+'" value="'+boxName+'" "  /><br/>'; -->
+</head>
+
+<body id="body">
+
+<section class="signin-page account">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        <div class="block text-center">
+          <a class="logo" href="index.html">
+            <img src="images/logo.png" alt="">
+          </a>
+          <h2 class="text-center">Add New products</h2>
+          <form class="text-left clearfix" action="/addNew" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Product Category Name" name="product_catgeory">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="SKU" name="sku">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Price" name="price">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Name" name="name">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control"  placeholder="Quantity" name="quantity">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control"  placeholder="ItemDescription" name="itemdescription">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Specifications" name="specifications">
+              </div>
+              <label for="exampleFormControlSelect1">SupplementFacts</label> 
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Servingsize" name="servingsize">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Servingpercontainer" name="servingpercontainer">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Discalimer" name="discalimer">
+              </div>
+              <label for="exampleFormControlSelect1">Dietary-Consideration</label>
+            
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  id="inlineCheckbox1" name="Gluten_Free">
+                <label class="form-check-label" for="inlineCheckbox1">Gluten Free</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  id="inlineCheckbox2" name="Non_GMO">
+                <label class="form-check-label" for="inlineCheckbox2">Non- GMO</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="vegetarian">
+                <label class="form-check-label" for="inlineCheckbox2">Vegetarian</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" name="Certified_B_Corporation">
+                <label class="form-check-label" for="inlineCheckbox2">Certified B Corporation</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  id="inlineCheckbox5" name="Dairy_Milk_Free">
+                <label class="form-check-label" for="inlineCheckbox2">Dairy/ Milk Free</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" name="Free_of_Artificial_Colors_Flavors">
+                <label class="form-check-label" for="inlineCheckbox2">Free of Artificial Colors/Flavors</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  id="inlineCheckbox7" name="Yeast_free">
+                <label class="form-check-label" for="inlineCheckbox2">Yeast Free</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox"  id="inlineCheckbox8" name="Corn_Free">
+                <label class="form-check-label" for="inlineCheckbox2">Corn Free</label>
+              </div>
+              <label for="exampleFormControlSelect1">Other Ingredients</label> 
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Other Ingredients comma seperated" name="otheringredients">
+              </div>
+
+              
+              <label for="exampleFormControlSelect1">Composition</label> 
+              <input type="button" onclick="addInput()" value="Add Another"></input>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Itemname" name="itemname">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Amountperserving" name="amountperserving">
+              </div>
+              <div class="form-group">
+                <input type="text" class="form-control"  placeholder="Persondailyvalue" name="persondailyvalue">
+              </div>
+             
+             
+              <span id="response"></span>
+              <br>
+              <br>
+             
+
+              <label for="exampleFormControlSelect1">Image Upload</label>
+              <div class="input-group mb-3">
+                <input type="file" class="form-control" id="inputGroupFile02" name="image">
+                <label class="input-group-text" for="inputGroupFile02"></label>
+              </div>
+
+            
+
+
+             <br>
+            <div class="text-center">
+              <button type="submit" class="btn btn-main text-center">Add New Item</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <!-- 
+    Essential Scripts
+    =====================================-->
+    
+    <!-- Main jQuery -->
+    <script src="plugins/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.1 -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap Touchpin -->
+    <script src="plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script>
+    <!-- Instagram Feed Js -->
+    <script src="plugins/instafeed/instafeed.min.js"></script>
+    <!-- Video Lightbox Plugin -->
+    <script src="plugins/ekko-lightbox/dist/ekko-lightbox.min.js"></script>
+    <!-- Count Down Js -->
+    <script src="plugins/syo-timer/build/jquery.syotimer.min.js"></script>
+
+    <!-- slick Carousel -->
+    <script src="plugins/slick/slick.min.js"></script>
+    <script src="plugins/slick/slick-animation.min.js"></script>
+
+    <!-- Google Mapl -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCC72vZw-6tGqFyRhhg5CkF2fqfILn2Tsw"></script>
+    <script type="text/javascript" src="plugins/google-map/gmap.js"></script>
+
+    <!-- Main Js File -->
+    <script src="javascripts/script.js"></script>
+    
+
+
+  </body>
+  </html>
