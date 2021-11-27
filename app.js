@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const userRoutes = require("./routes/userRoutes");
-const cookieParser = require("cookie-parser");
+
 const sessions = require('express-session');
 
 //const multer = require('multer');
@@ -42,7 +42,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use( express.static( "public" ) );
-app.use(cookieParser());
 
 app.use(session({ secret: 'this-is-a-secret-token' }));
 app.use(passport.initialize());
