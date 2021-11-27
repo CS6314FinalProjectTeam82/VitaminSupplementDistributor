@@ -68,6 +68,9 @@ app.use(express.json());
   // .catch (console.error);
 
 
+var mainRoutes = require('./routes/main')
+app.use(mainRoutes)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -94,5 +97,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/vitaminstore');
 
 module.exports = app;

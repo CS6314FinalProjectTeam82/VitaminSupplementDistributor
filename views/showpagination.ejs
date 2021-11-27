@@ -1,0 +1,118 @@
+<%- include ('partials/header') %>
+
+
+<div class="container">
+    <div class="row">
+
+
+        
+        <% for (var i = 0; i < products.length; i++) { %>
+            <h3><%= products[i].name %></h3>
+            <div class="col-md-4">
+                <div class="row">
+                    <img class="img-responsive" src="images/<%= products[i].Image %>" alt="product-img" />
+                </div>
+                <div>
+                    <hr>
+                    <h4>Dietary Restrictions:</h4>
+                        <ul>
+                            <% products[i].dietaryconsideration.forEach(function(dietaryconsideration){ %>
+                            <li><%= dietaryconsideration + "," %></li>
+                            <% }); %>
+                        </ul>
+                    <hr>
+                </div>        
+            </div>
+
+            <!-- <div class="col-md-8">
+                <h4>Your Price:</h4>
+                <h5>Item Description :  </h5>
+                <p><%= products[i].itemdescription %></p>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 > Supplementary Facts</h4>
+                        <div >
+                            <h6 style="display: inline"> Serving size :</h6>
+                            <p><%= products[i].supplementfacts.servingsize %></p>
+                        </div>
+                        <div >
+                            <h6 style="display: inline">Serving per Container</h6>
+                            <p><%= products[i].supplementfacts.servingpercontainer %></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>Specifications</h4>
+                        <p><%= products[i].specifications %></p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Amount Per Serving</h4>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>% Daily Value</h4>
+                    </div>
+                    <% products[i].composition.forEach(function(item){ %>
+                        <div class="row">
+                            <div class="col-md-4">  
+                                <p><%= item.itemname %></p>
+                            </div>
+                            <div class="col-md-4">
+                                <p><%= item.amountperserving%></p>
+                            </div>
+                            <div class="col-md-4">
+                                <p><%= item.persondailyvalue%></p>
+                            </div>  
+                        </div>
+                    <% }); %>
+                </div>
+                <h4>Other Ingredients:</h4>
+                <% products[i].otheringredients.forEach(function(ingredient){ %>
+                    <p style="display: inline;"><%= ingredient + "," %></p>
+                <% }); %>
+            </div> -->
+            
+        <% } %>
+        
+
+        
+
+    </div>
+    <% if (pages > 0) { %>
+        <ul class="pagination text-center">
+            <% if (current == 1) { %>
+                <li class="disabled"><a>First</a></li>
+            <% } else { %>
+                <li><a href="/products/1">First</a></li>
+            <% } %>
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+                <li class="disabled"><a>...</a></li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                <% if (i == current) { %>
+                    <li class="active"><a><%= i %></a></li>
+                <% } else { %>
+                    <li><a href="/products/<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+            <% } %>
+            <% if (current == pages) { %>
+                <li class="disabled"><a>Last</a></li>
+            <% } else { %>
+                <li><a href="/products/<%= pages %>">Last</a></li>
+            <% } %>
+        </ul>
+    <% } %>
+</div>
+
+
+<%- include ('partials/footer') %>
+
+

@@ -181,12 +181,13 @@ FACEBOOK: https://www.facebook.com/themefisher
 					<!-- Home -->
 					<li class="dropdown ">
 						<a href="index.html">Home</a>
+
+
                         <a href="/new">Add Items</a> <a href="/editProd">Edit Items</a>
 						<a href="/upload">Upload Items</a>
 						
 
-						
-						
+			
 					</li><!-- / Home -->
 
 
@@ -205,7 +206,11 @@ FACEBOOK: https://www.facebook.com/themefisher
 										<li role="separator" class="divider"></li>
 										<li><a href="shop.html">Shop</a></li>
 										<li><a href="checkout.html">Checkout</a></li>
+
+										<li><a href="cart.html">Cart</a></li>
+
 										<li><a href="/cart">Cart</a></li>
+
 										<li><a href="pricing.html">Pricing</a></li>
 										<li><a href="confirmation.html">Confirmation</a></li>
 
@@ -317,6 +322,17 @@ FACEBOOK: https://www.facebook.com/themefisher
 	</nav>
 </section>
 
+<section class="page-header">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="content">
+					<h1 class="page-name">Shop</h1>
+					<ol class="breadcrumb">
+						<li><a href="index.html">Home</a></li>
+						<li class="active">shop</li>
+					</ol>
+
 <div class="hero-slider">
   <div class="slider-item th-fullpage hero-area" style="background-image: url(images/slider/slider-1.jpg);">
     <div class="container">
@@ -390,12 +406,113 @@ FACEBOOK: https://www.facebook.com/themefisher
 							<p>Special Design Comes First</p>
 						</div>
 					</a>	
+
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
+
+
+
+	<form class="form-inline" action="/search" method="POST">
+	  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="productName">
+  
+   <div class="form-group">
+	  <label for="exampleFormControlSelect1">Category</label>
+	  <select class="form-control" id="exampleFormControlSelect1" name="categoryName">
+		<option value = ""></option>
+		<option value="MultiVitamins">MultiVitamins</option>
+		<option value="Minerals">Minerals</option>
+		<option value="Single Vitamin">Single Vitamin</option>
+		
+  
+	  </select>
+	</div>
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  
+	</form>
+  
+  
+  
+  
+
+<section class="products section">
+
+
+    <div class="container">
+        <div class="row">
+            <% results.forEach(function(product){ %>
+
+                <div class="col-md-4">
+                    <div class="product-item">
+                        <div class="product-thumb">
+                            <span class="bage">Sale</span>
+                            <img class="img-responsive" src="images/<%= product.Image %>" alt="product-img" />
+
+                            <div class="preview-meta">
+
+								<ul>
+									<li>
+										<a href="/<%= product._id %>"><button class="btn btn-primary">Quick View</button></a>
+									</li>
+								</ul>
+								
+                                <!-- <ul>
+                                    <li>
+                                        <span  data-toggle="modal" data-target="#product-modal">
+                                            <i class="tf-ion-ios-search-strong"></i>
+                                            
+                                        </span>
+                                    </li>
+                                    <li>
+                                        <a href="/product/<%= product._id %>" ><i class="tf-ion-ios-heart"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="#!"><i class="tf-ion-android-cart"></i></a>
+                                    </li>
+                                </ul> -->
+                              </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+
+                
+            
+            
+            <% }); %>
+            
+        </div>
+
+        
+            
+        
+
+
+    </div>
+    
+	
+</section>
+
+<div class="standard-wrapper">
+	<header>
+	 <div>
+	   <h1>PLACEHOLDER TEXT</h1>
+	   <h2>Search For Products</h2>
+	 </div>
+	<div class="header-form">
+	  <form action="/shop/1/">
+		<input type="text" name="search" placeholder="Search">
+		<button type="submit"></button>
+	  </form>
+	</div>
+   </header>
+  </div>
+=======
 <section class="products section bg-gray">
 	<div class="container">
 		<div class="row">
@@ -717,6 +834,7 @@ Start Call To Action
 		</div>
 	</div>
 </section>
+
 
 
 <footer class="footer section text-center">
