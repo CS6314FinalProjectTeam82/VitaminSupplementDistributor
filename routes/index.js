@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
-
-
-
-
-
+var monk  = require('monk');
+var db = monk('localhost:27017/vitaminstore');
+var Product = require('../models/product');
+var collection = db.get('users');
+var productsCollection = db.get('products');
 
 
 /* GET home page. */
@@ -13,32 +13,22 @@ router.get('/', function(req, res, next) {
 });
 
 
-var monk  = require('monk');
-var db = monk('localhost:27017/vitaminstore');
-
-var Product = require('../models/product');
-
-var collection = db.get('users');
-
-var productsCollection = db.get('products');
-
-
-router.post('/user',function(req,res,next){
-  var user = {
-    username : req.body.email,
-    password:req.body.password,
-    fname:req.body.firstName,
-    lname : req.body.lastName,
-  }
+// router.post('/user',function(req,res,next){
+//   var user = {
+//     username : req.body.email,
+//     password:req.body.password,
+//     fname:req.body.firstName,
+//     lname : req.body.lastName,
+//   }
 
 
-  collection.insert(user,function(err,user){
-      if(err) throw err;
-      res.json(user);
+//   collection.insert(user,function(err,user){
+//       if(err) throw err;
+//       res.json(user);
 
-  })
+//   })
 
-});
+// });
 
 router.get('/products',function(req,res,next){
   productsCollection.find({},function(err,products){
@@ -48,13 +38,13 @@ router.get('/products',function(req,res,next){
 });
 
 
-// router.get('/:id',function(req,res,next){
-//   productsCollection.findOne({_id:req.params.id},function(err,product){
-//     if (err) throw err;
-//     res.render('show',{product:product})
+router.get('/:id',function(req,res,next){
+  productsCollection.findOne({_id:req.params.id},function(err,product){
+    if (err) throw err;
+    res.render('show',{product:product})
 
-//   })
-// })
+  })
+})
 
 
 
@@ -531,18 +521,29 @@ const bcrypt = require("bcrypt");
     const salt = await bcrypt.genSalt(10);
     // now we set user password to hashed password
     user.password = await bcrypt.hash(user.password, salt);
-    user.save().then((doc) => res.status(201).send(doc));
+    user.save().then(
+      res.render('login')
+      
+      );
   });
 
+  router.get('/login', function(req, res, next) {
+    res.render('login');
+  });
+  
+
+
   // login route
-  router.post("/login", async (req, res) => {
+  router.post("/authenticate", async (req, res) => {
     const body = req.body;
     const user = await User.findOne({ email: body.email });
     if (user) {
       // check user password with hashed password stored in the database
       const validPassword = await bcrypt.compare(body.password, user.password);
+      console.log(validPassword);
       if (validPassword) {
-        res.render('index');
+        //res.status(200).json({ good: " Password" });
+        res.redirect('/products');
       } else {
         res.status(400).json({ error: "Invalid Password" });
       }
