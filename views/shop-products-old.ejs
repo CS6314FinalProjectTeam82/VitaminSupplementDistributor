@@ -1,0 +1,81 @@
+
+ <%- include ('partials/header') %>
+<!-- SEARCH RESULTS | START -->
+    <div class="results">
+    
+    <h4>Displaying Total <span><%= results.numOfResults %></span> Results</h4>
+    <h4>
+      Page 
+      <span><%= results.currentPage %></span> 
+      of 
+      <span><%= results.pages %></span> 
+    </h4> 
+   </div>
+   <!-- SEARCH RESULTS | END -->
+   <!-- SHOP | START -->
+  
+
+<!-- <div class="container">
+    <div class="row"> -->
+    <!-- Rendering Products using EJS -->
+    <!-- <% var len = results.products.length %>
+    <% for (var i = 0; i < len; i++) { %>
+        <h3><%= results.products[i].name %></h3>
+        <div class="col-md-4">
+            <div class="row">
+                <img class="img-responsive" src="images/<%= results.products[i].Image %>" alt="product-img" />
+            </div>
+            <div>
+                <hr>
+                <h4>Dietary Restrictions:</h4>
+                    <ul>
+                        <% results.products[i].dietaryconsideration.forEach(function(dietaryconsideration){ %>
+                        <li><%= dietaryconsideration + "," %></li>
+                        <% }); %>
+                    </ul>
+                <hr>
+            </div>        
+        </div>
+   <% }); %> -->
+   <!-- </div> -->
+   <!-- PAGINATION -->
+    <!-- <div class="shop-pagination">
+     <div class="pagination">
+      <% if (currentPage == 1 && pages > 1) { %> 
+       <a 
+         href="/shop/<%= parseInt(currentPage) + 1 %>" 
+         <span>
+          Page <%=  parseInt(currentPage) + 1 %>
+          <i class="icon ion-ios-arrow-forward"></i>
+         </span>
+       </a>
+     <% } else if (currentPage < pages) { %>
+      <a 
+        href="/shop/<%= parseInt(currentPage) - 1 %>">
+        <span>
+          <i class="icon ion-ios-arrow-back"></i>
+          Page <%= parseInt(currentPage) - 1 %>
+        </span>
+      </a>
+      <a 
+        href="/shop/<%= parseInt(currentPage) + 1 %>">
+        <span>
+         Page <%= parseInt(currentPage) + 1 %>
+         <i class="icon ion-ios-arrow-forward"></i>
+        </span>
+      </a>
+    <% } else if (currentPage == pages && pages > 1) { %>
+     <a 
+       href="/shop/<%= parseInt(currentPage) - 1 %>">
+       <span>
+        <i class="icon ion-ios-arrow-back"></i>Page 
+        <%=parseInt(currentPage) - 1 %>
+       </span>
+     </a>
+      <% } %>
+     </div>
+    </div>
+   <% } %> -->
+</div>
+
+<%- include ('partials/footer') %>
