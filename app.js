@@ -53,10 +53,19 @@ app.use(express.json());
   // here we want express to use userRoutes for all requests coming at /auth like /auth/login
   app.use("/", userRoutes);
 
-  mongoose
-  .connect("mongodb://localhost:27017/vitaminstore", { useNewUrlParser: true })
-  .then((_) => console.log("Connected to DB"))
-  .catch((err) => console.error("error", err));
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+
+mongoose.connect('mongodb://localhost:27017/vitaminstore');
+
+  // mongoose
+  // .connect("mongodb://localhost:27017/vitaminstore", { useNewUrlParser: true })
+  // .then((_) => console.log("Connected to DB"))
+  // .catch((err) => console.error("error", err));
 
   // mongoose.connect("mongodb://localhost:27017/vitaminstore", {
   //   useNewUrlParser: true,

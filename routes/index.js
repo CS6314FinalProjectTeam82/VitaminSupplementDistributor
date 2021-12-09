@@ -4,259 +4,25 @@ var monk  = require('monk');
 var db = monk('localhost:27017/vitaminstore');
 var Product = require('../models/product');
 var collection = db.get('users');
+var accCollection = db.get('accounts');
 var productsCollection = db.get('products');
+var orderCollection = db.get('orderDetails');
 
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('signin');
-});
-
-
-// router.post('/user',function(req,res,next){
-//   var user = {
-//     username : req.body.email,
-//     password:req.body.password,
-//     fname:req.body.firstName,
-//     lname : req.body.lastName,
-//   }
-
-
-//   collection.insert(user,function(err,user){
-//       if(err) throw err;
-//       res.json(user);
-
-//   })
-
-// });
-
-router.get('/products',function(req,res,next){
-  productsCollection.find({},function(err,products){
-    if(err) throw err;
-    res.render('index',{results:products});
-  })
-});
-
-
-router.get('/:id',function(req,res,next){
-  productsCollection.findOne({_id:req.params.id},function(err,product){
-    if (err) throw err;
-    res.render('show',{product:product})
-
-  })
-})
-
-
-
-
-router.post('/search', (req, res) => {
-
-  if(req.body.productName == "" && req.body.categoryName == ""){
-    res.redirect('/products');
-  }
-
-  else if(req.body.categoryName == ""){
-
-
-    productsCollection.find({name:{'$regex':req.body.productName}},function(err,products){
-      if(err) throw err;
-      res.render('index',{results:products});
-    });
-  }
-  else if(req.body.productName == ""){
-    productsCollection.find({category_name : {'$regex':req.body.categoryName}},function(err,products){
-      if(err) throw err;
-      res.render('index',{results:products});
-
-    });
-  }
-  else{
-
-
-    productsCollection.find({name:{'$regex':req.body.productName}, category_name: {'$regex':req.body.categoryName}},function(err,products){
-
-      if(err) throw res.render('error',{message: err});
-      res.render('index',{results:products});
-      });
-    
-  }
-
-});
-
-
-// router.get('/videos', function(req, res, next) {
-
-
-//   collection.find({},function(err,videos){
-//       if(err) throw err;
-//       res.render('index',{results : videos});
-//   })
-// });
-
-
-
-// router.get('/generate-fake-data', function(req, res, next) {
-//   for (var i = 0; i < 90; i++) {
-//       var product = new Product()
-
-//       product.category = faker.commerce.department()
-//       product.name = faker.commerce.productName()
-//       product.price = faker.commerce.price()
-//       product.cover = faker.image.image()
-
-//       product.save(function(err) {
-//           if (err) throw err
-//       })
-//   }
-//   res.redirect('/add-product')
-// })
-
-
-
-// router.get('/products/:page', function(req, res, next) {
-//   var perPage = 5
-//   var page = req.params.page || 1
-
-//   Product
-//       .find({})
-//       .skip((perPage * page) - perPage)
-//       .limit(perPage)
-//       .exec(function(err, products) {
-//           Product.count().exec(function(err, count) {
-//               if (err) return next(err)
-
-              
-
-//               res.render('showpagination', {
-//                   products: products,
-//                   current: page,
-//                   pages: Math.ceil(count / perPage)
-//               })
-//           })
-//       })
-// })
-
-
-
-
-
-
-
-
-
-// router.get('/posts', async (req, res) => {
-//   // destructure page and limit and set default values
-//   const { page = 1, limit = 5 } = req.query;
-
-//   try {
-//     // execute query with page and limit values
-//     const posts = await Product.find({})
-//       .limit(limit * 1)
-//       .skip((page - 1) * limit)
-//       .exec(function(err, products) {
-//         Product.count().exec(function(err, count) {
-//             if (err) return next(err)
-
-//             res.render('showpagination',{
-//               products: products,
-                
-
-//             })
-
-//             // res.render('showpagination', {
-//             //     products: products,
-//             //     current: page,
-//             //     pages: Math.ceil(count / perPage)
-//             // })
-//         })
-//     });
-
-    // get total documents in the Posts collection 
-    // const count = await Product.countDocuments();
-
-
-
-
-
-    // // return response with posts, total pages, and current page
-    // res.json({
-    //   posts,
-    //   totalPages: Math.ceil(count / limit),
-    //   currentPage: page
-    // });
-  // 
-
-
-  router.get('/shop/:page', async (req, res, next) => {
-    
-    const resPerPage = 9; // results per page
-    const page = req.params.page || 1; // Page 
-    try {
-
-      var foundProducts =  await Product.find({})
-      .skip((resPerPage * page) - resPerPage)
-      .limit(resPerPage);
-
-      numOfProducts =  await Product.count(); 
-      
-      console.log("numProds" + numOfProducts);
-
-    
-    
-      
-      var results = {products: foundProducts[0], 
-        currentPage: page, 
-        pages: Math.ceil(numOfProducts / resPerPage), 
-        numOfResults:numOfProducts
-
-      }
-
-    //res.json(results);
-    res.render('shop',{ results :results})
-    
-    
-    } catch (err) {
-      throw new Error(err);
-    }
-    });
-
-
-
-    router.post('/products/:id', (req, res) => {
-        productCollection.update({_id:req.params.id},{
-        
-          $set:{
-            isDeleted : true
-          }
-          
-      },function(err,product){
-          if(err) throw err;
-           res.json(product);
-      })
-       
-      });
-
-var monk = require('monk');
-var db = monk('localhost:27017/vitaminstore');
-var collection = db.get('users');
-var productCollection = db.get('products');
 const path = require('path');
 const multer  = require('multer')
 var productName;
 var session;
+var passport = require('passport');
+var Account = require('../models/account');
+var LocalStrategy = require('passport-local').Strategy;
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('login');
+
+router.get('/addnew', function(req, res, next) {
+  res.render('addnewitem');
 });
 
-// router.post('/login', function(req, res, next) {
-//   collection.findOne({username:req.body.username, password:req.body.password},function(err,user){
-//     if(err) throw err;
-//     res.render('index');
-//    });
-// });
-
+// Add New Item to the products
 
 // Image Upload
 const imageStorage = multer.diskStorage({
@@ -280,14 +46,9 @@ const imageUpload = multer({
   }
 })  
 
-// Add New Item to the products
-
-router.get('/new', function(req, res, next) {
-  res.render('addnewitem');
-});
-
-router.post('/addnew', imageUpload.single('image'), (req, res) => {
+router.post('/addNew', imageUpload.single('image'), (req, res) => {
  
+  console.log(" I am in add New");
   var supplementfactsjson = {
     servingsize : req.body.servingsize,
     servingpercontainer: req.body.servingpercontainer
@@ -359,31 +120,268 @@ var otherIngre = req.body.otheringredients.split(",");
     dietaryconsideration: dc,
     composition: comp,
     Image: req.body.name+".png",
-    isDeleted: false
+    is_Deleted: false
     
   }
 
- 
 
-
-  productCollection.insert(product,function(err,product){
+  productsCollection.insert(product,function(err,product){
       if(err) throw err;
-      //res.send(req.file)
-      res.json(product);
+      res.redirect('/adminproducts');
       
   })
 });
 
-// Edit products
+router.get('/confirmation', function(req,res, next){
+  res.render('confirmation');
+});
 
-router.get('/editProd', function(req, res, next) {
-  // place /:id after products removed for testing 
-  console.log("ID in req"+req.params.id);
- // productCollection.findOne({_id:req.params.id},function(err,product){
-   //Hardcoding ID for testing 
-    productCollection.findOne({_id:'61a0191f87816b0f797677c8'},function(err,product){
+
+
+router.get('/continueshopping', function(req,res, next){
+  res.redirect('/products/1');
+});
+
+router.get('/', function(req, res, next) {
+    res.render('signin');
+  });
+  
+  
+  router.get('/register', function(req, res) {
+    res.render('signin', {});
+  });
+  
+
+  router.get('/checkout',function(req,res,next){
+    res.render('checkout');;
+});
+
+
+router.get('/orderHistory',function(req,res,next){
+    var userObj = req.user;
+    console.log("In orderHistory"+userObj.username);
+
+    orderCollection.find({user_id:userObj.username},function(err,orders){
+
+        if(err) throw err;
+        console.log(orders);
+        res.render('orderhistory',{orders:orders});
+        
+    })
+
+});
+
+
+router.post('/addOrder',function(req,res,next){
+
+    var Username = req.user.username;
+
+    accCollection.findOne({username:Username},function(err,user){
+        if(err) throw err;
+        
+        var orderItems = [];
+
+        var cartItems = user.cart_items;
+
+        var shippingAddress = {
+            fullname :req.body.fullName,
+            address : req.body.address,
+            zipcode: req.body.zipcode,
+            city: req.body.city,
+            country: req.body.country
+        }
+
+        console.log("The full Name is ****** " + shippingAddress.fullname);
+        
+        for(var i=0;i<cartItems.length;i++){
+            orderItems.push(cartItems[i]);
+        }
+
+        var orderItemDoc = {
+
+            user_id:Username,
+            order_id : Date.now(),
+            order_items:orderItems,
+            shipping_address: shippingAddress,
+            date : new Date().toLocaleDateString()
+        
+        }
+        orderCollection.insert(orderItemDoc,function(err,product){
+            if(err) throw err;
+            
+        })
+        
+        res.render('confirmation');
+    })
+
+});
+
+
+router.post('/register', function(req, res) {
+
+    Account.register(new Account({ username : req.body.username, firstName : req.body.firstName, lastName: req.body.lastName,
+  
+      mobile_number: req.body.mobile_number, is_admin : false }), req.body.password, function(err, account) {
+  
+      if (err) {
+  
+        console.log(err);
+        return res.send("<script> alert('User Already Exist'); window.location =  '/login'; </script>")
+  
+        //return res.render('signin', { account : account });
+  
+      }
+  
+   
+  
+      passport.authenticate('local')(req, res, function () {
+  
+        res.redirect('/login');
+  
+      });
+  
+  });
+  
+  });
+  
+   
+  
+  router.get('/login', function(req, res) {
+  
+    res.render('login');
+  
+  });
+  
+   
+  
+  router.post('/login', passport.authenticate('local'), function(req, res) {
+  
+    console.log("I am "+ req.user.is_admin);
+  
+    if(req.user.is_admin)
+  
+    res.redirect('/adminproducts');
+  
+    else res.redirect('/products/1');
+  
+   
+  
+  });
+  
+   
+  
+  router.get('/logout', function(req, res) {
+  
+    req.logout();
+  
+    res.redirect('/login');
+  
+  });
+  
+   
+  
+  passport.serializeUser(function(account, done) {
+  
+    done(null, account.id);
+  
+  });
+  
+   
+  
+  passport.deserializeUser(function(id, done) {
+  
+    Account.findById(id, function(err, account) {
+  
+      done(err, account);
+  
+    });
+  
+  });
+
+
+  router.get('/cartDetails',function(req,res,next){
+    var userName = req.user.username;
+    console.log("The user is " + userName);
+    var cartItems;
+    
+    accCollection.findOne({username : userName},function(err,account){
+        if(err) throw err;
+        cartItems = account.cart_items;
+        res.render('cart',{results : cartItems });
+    })
+
+})
+
+
+router.get('/adminproducts',function(req,res,next){
+  productsCollection.find({is_Deleted: false},function(err,products){
     if(err) throw err;
-    //res.json(product);
+    res.render('adminindex',{results:products});
+  })
+});
+
+router.get('/:id',function(req,res,next){
+  productsCollection.findOne({_id:req.params.id},function(err,product){
+    if (err) throw err;
+    res.render('show',{product:product})
+
+  })
+})
+
+router.get('/admin/:id',function(req,res,next){
+  productsCollection.findOne({_id:req.params.id},function(err,product){
+    if (err) throw err;
+    res.render('adminshow',{product:product})
+
+  })
+})
+
+
+
+
+router.post('/search', (req, res) => {
+
+  if(req.body.productName == "" && req.body.categoryName == ""){
+    res.redirect('/products/1');
+  }
+
+  else if(req.body.categoryName == ""){
+
+
+    productsCollection.find({name:{'$regex':req.body.productName}},function(err,products){
+      if(err) throw err;
+      res.render('index',{results:products});
+    });
+  }
+  else if(req.body.productName == ""){
+    productsCollection.find({category_name : {'$regex':req.body.categoryName}},function(err,products){
+      if(err) throw err;
+      res.render('index',{results:products});
+
+    });
+  }
+  else{
+
+
+    productsCollection.find({name:{'$regex':req.body.productName}, category_name: {'$regex':req.body.categoryName}},function(err,products){
+
+      if(err) throw res.render('error',{message: err});
+      res.render('index',{results:products});
+      });
+    
+  }
+
+});
+
+
+// Edit products
+router.get('/editProd/:id', function(req, res, next) {
+  
+  console.log("ID in req"+req.params.id);
+ 
+   productsCollection.findOne({_id:req.params.id},function(err,product){
+    if(err) throw err;
+   
       res.render('edititem',{product: product});
    });
 });
@@ -446,7 +444,7 @@ if(req.body.Dairy_Milk_Free == "on"){
 
 var otherIngre = req.body.otheringredients.split(",");
 
-  productCollection.update({_id:req.body.id},{
+productsCollection.update({_id:req.body.id},{
     
     $set:{
     category_name : req.body.product_catgeory,
@@ -462,28 +460,30 @@ var otherIngre = req.body.otheringredients.split(",");
     dietaryconsideration: dc,
     composition: comp,
     Image: req.body.name+".png",
-    isDeleted: false
+    is_Deleted: false
 
       }
       
   },function(err,product){
       if(err) throw err;
-       res.json(product);
+   
+      res.redirect('/adminproducts')
   })
 
 });
 
 //Delete API - soft delete 
-router.post('/products/:id', (req, res) => {
-  productCollection.update({_id:req.params.id},{
+router.post('/:id/delete', (req, res) => {
+  productsCollection.update({_id:req.params.id},{
   
     $set:{
-      isDeleted : true
+      is_Deleted : true
     }
     
 },function(err,product){
     if(err) throw err;
-     res.json(product);
+    // res.json(product);
+    res.redirect('/adminproducts')
 })
  
 });
@@ -503,54 +503,11 @@ router.post('/uploadImage', imageUpload.single('image'), (req, res) => {
 })
 
 
-const bcrypt = require("bcrypt");
- // const express = require("express");
-  const User = require("../models/userModel");
-  //const router = express.Router();
-  // signup route
-  router.post("/signup", async (req, res) => {
-    const body = req.body;
-
-    if (!(body.email && body.password)) {
-      return res.status(400).send({ error: "Data not formatted properly" });
-    }
-
-    // creating a new mongoose doc from user data
-    const user = new User(body);
-    // generate salt to hash password
-    const salt = await bcrypt.genSalt(10);
-    // now we set user password to hashed password
-    user.password = await bcrypt.hash(user.password, salt);
-    user.save().then(
-      res.render('login')
-      
-      );
-  });
 
   router.get('/login', function(req, res, next) {
     res.render('login');
   });
   
-
-
-  // login route
-  router.post("/authenticate", async (req, res) => {
-    const body = req.body;
-    const user = await User.findOne({ email: body.email });
-    if (user) {
-      // check user password with hashed password stored in the database
-      const validPassword = await bcrypt.compare(body.password, user.password);
-      console.log(validPassword);
-      if (validPassword) {
-        //res.status(200).json({ good: " Password" });
-        res.redirect('/products');
-      } else {
-        res.status(400).json({ error: "Invalid Password" });
-      }
-    } else {
-      res.status(401).json({ error: "User does not exist" });
-    }
-  });
 
 
 // Add to cart
@@ -565,6 +522,96 @@ router.get('/cart/:id/update', function(req, res, next) {
 });
 
 
+
+router.get('/:id/addtocart',function(req,res,next){
+    var Username = req.user.username;
+    productsCollection.findOne({_id:req.params.id},function(err,product){
+        if(err) throw err;
+        result = product;
+
+        var cartItem = {
+            id:result._id,
+            sku:result.Sku,
+            name:result.name,
+            price:result.price,
+            image:result.Image
+        
+        }
+        console.log("The name is" + cartItem.name);
+        accCollection.update({username:Username},{
+          
+        
+            $addToSet: { cart_items: cartItem } 
+                
+            },function(err,product){
+                if(err) throw err;     
+        })
+        res.redirect('/products/1');
+    })
+
+})
+
+
+router.get('/removeCartItem/:id',function(req,res,next){
+    var userName = req.user.username;
+    var cartItemSku= req.params.id ;
+
+    console.log("In remove cart item");
+    
+    
+
+
+
+    console.log("The user is" + userName);
+    console.log("The sku is " + cartItemSku);
+    
+    accCollection.findOneAndUpdate({username:userName},
+        {$pull: {cart_items: {sku:cartItemSku}}},
+        {safe: true, upsert: true},
+        function(err, doc) {
+            if(err){
+            console.log(err);
+            }
+        }
+    );
+    res.redirect('/cartDetails');
+    
+
+})
+
+
+
+
+function pagination(req, res, next) {
+  var perPage = 3
+  var page = req.params.page || 1
+  console.log("In in products/page")
+  Product
+      .find({})
+      .skip((perPage * page) - perPage)
+      .limit(perPage)
+      .exec(function(err, products) {
+      
+        Product.count().exec(function(err, count) {
+              if (err) return next(err)
+             //res.json(products);
+              res.render('index', {
+                  products: products,
+                  current: page,
+                  pages: Math.ceil(count / perPage)
+              })
+          })
+      })
+}
+
+
+
+
+router.get('/products/:page',function(req,res,next){
+  pagination(req, res, next);
+
+
+});
 
 
 
